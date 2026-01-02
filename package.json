@@ -10,6 +10,16 @@
       "name": "list-emulators",
       "title": "List Emulators",
       "description": "List available android emulators/ios simulators",
+      "keywords": [
+        "emulator",
+        "android",
+        "ios",
+        "watchos",
+        "ipados",
+        "tvos",
+        "visionos",
+        "simulator"
+      ],
       "mode": "view"
     }
   ],
