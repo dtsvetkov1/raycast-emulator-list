@@ -1,17 +1,16 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
-  "name": "android-emulator",
-  "title": "Emulator",
-  "description": "Open android emulator/ios simulator",
+  "name": "raycast-emulator-list",
+  "title": "List Emulators",
+  "description": "List available android emulators/ios simulators",
   "icon": "extension-icon.png",
   "license": "MIT",
   "commands": [
     {
       "name": "list-emulators",
-      "title": "list emulators",
-      "description": "emulator --list-avds",
-      "mode": "view",
-      "subtitle": ""
+      "title": "List Emulators",
+      "description": "List available android emulators/ios simulators",
+      "mode": "view"
     }
   ],
   "dependencies": {
