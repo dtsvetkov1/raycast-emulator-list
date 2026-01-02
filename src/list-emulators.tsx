@@ -59,6 +59,7 @@ export default function Command() {
 
   return (
     <List
+      filtering={true}
       isLoading={isLoading}
       searchBarPlaceholder="Search emulators..."
       searchText={searchText}
