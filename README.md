@@ -13,12 +13,26 @@ A Raycast extension to quickly list and launch Android emulators and iOS (watchO
 
 ### Android Emulators
 
-The `emulator` command must be available in your PATH. This is typically located at:
+The extension supports configurable paths for the Android emulator:
 
-- **macOS/Linux**: `$ANDROID_HOME/emulator/emulator`
-- **Windows**: `%ANDROID_HOME%\emulator\emulator.exe`
+| Platform | Default Path | Configuration |
+|----------|--------------|---------------|
+| **Windows** | `emulator` (from PATH) | Can specify a custom path in settings |
+| **macOS** | `~/Library/Android/sdk/emulator/emulator` | Can specify a custom path in settings |
 
-To add it to your PATH, add the following to your shell config (`.zshrc`, `.bashrc`, etc.):
+#### Configuration
+
+You can customize the emulator path in the extension preferences (Raycast → Extensions → Emulator List → Preferences):
+
+- **Android Emulator Path (Windows)** — Path to the emulator executable on Windows. Leave as `emulator` if it's already in your PATH.
+- **Android Emulator Path (macOS)** — Full path to the emulator executable on macOS. Supports `~` for home directory.
+
+#### Adding Emulator to PATH (Optional)
+
+If you prefer using the default PATH-based approach on Windows, add the following to your environment variables:
+
+- **Windows**: Add `%ANDROID_HOME%\emulator` to your PATH
+- **macOS/Linux**: Add the following to your shell config (`.zshrc`, `.bashrc`, etc.):
 
 ```bash
 export ANDROID_HOME=$HOME/Library/Android/sdk
