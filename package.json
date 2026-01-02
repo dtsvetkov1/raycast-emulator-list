@@ -51,5 +51,25 @@
   ],
   "categories": [
     "Developer Tools"
+  ],
+  "preferences": [
+    {
+      "name": "androidEmulatorPathWindows",
+      "type": "textfield",
+      "required": false,
+      "title": "Android Emulator Path (Windows)",
+      "description": "Path to the Android emulator executable on Windows. Leave empty to use 'emulator' from PATH.",
+      "default": "emulator",
+      "placeholder": "emulator"
+    },
+    {
+      "name": "androidEmulatorPathMacOS",
+      "type": "textfield",
+      "required": false,
+      "title": "Android Emulator Path (macOS)",
+      "description": "Path to the Android emulator executable on macOS.",
+      "default": "~/Library/Android/sdk/emulator/emulator",
+      "placeholder": "~/Library/Android/sdk/emulator/emulator"
+    }
   ]
 }
