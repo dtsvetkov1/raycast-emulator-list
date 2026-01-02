@@ -1,8 +1,8 @@
 import { ActionPanel, List, Action, Icon, showToast, Toast } from "@raycast/api";
 import { useExec } from "@raycast/utils";
 import { exec } from "child_process";
-import { platform } from "os";
 import { useState } from "react";
+import { IS_MACOS, ANDROID_EMULATOR_PATH } from "./constants";
 
 interface IOSSimulator {
   udid: string;
@@ -15,22 +15,25 @@ interface SimctlDevices {
   devices: Record<string, IOSSimulator[]>;
 }
 
-const isMacOS = platform() === "darwin";
-
 export default function Command() {
   const [searchText, setSearchText] = useState("");
-  const { isLoading: isLoadingAndroid, data: androidData, error: androidError } = useExec("emulator", ["-list-avds"]);
+
+  const {
+    isLoading: isLoadingAndroid,
+    data: androidData,
+    error: androidError,
+  } = useExec(ANDROID_EMULATOR_PATH, ["-list-avds"]);
 
   const {
     isLoading: isLoadingIOS,
     data: iosData,
     error: iosError,
-  } = useExec("xcrun", ["simctl", "list", "devices", "-j"], { execute: isMacOS });
+  } = useExec("xcrun", ["simctl", "list", "devices", "-j"], { execute: IS_MACOS });
 
   const emulators = androidData?.split("\n").filter((name) => name.trim() !== "") ?? [];
 
   const iosSimulators: IOSSimulator[] =
-    isMacOS && iosData
+    IS_MACOS && iosData
       ? Object.values((JSON.parse(iosData) as SimctlDevices).devices).flatMap((devices) =>
           devices.filter((d) => d.isAvailable),
         )
@@ -52,7 +55,7 @@ export default function Command() {
     });
   }
 
-  const isLoading = isLoadingAndroid || (isMacOS && isLoadingIOS);
+  const isLoading = isLoadingAndroid || (IS_MACOS && isLoadingIOS);
 
   return (
     <List
@@ -73,7 +76,8 @@ export default function Command() {
                   title="Start Emulator"
                   icon={Icon.Play}
                   onAction={async () => {
-                    exec(`emulator @${emulator}`, (error) => {
+                    const command = `"${ANDROID_EMULATOR_PATH}" @${emulator}`;
+                    exec(command, (error) => {
                       if (error) {
                         showToast({
                           style: Toast.Style.Failure,
@@ -96,7 +100,7 @@ export default function Command() {
       </List.Section>
 
       <List.Section title="iOS Simulators">
-        {isMacOS ? (
+        {IS_MACOS ? (
           iosSimulators.map((simulator) => (
             <List.Item
               key={simulator.udid}
