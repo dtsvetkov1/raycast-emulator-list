@@ -21,17 +21,20 @@ export default function Command() {
   const [searchText, setSearchText] = useState("");
   const { isLoading: isLoadingAndroid, data: androidData, error: androidError } = useExec("emulator", ["-list-avds"]);
 
-  const { isLoading: isLoadingIOS, data: iosData, error: iosError } = useExec(
-    "xcrun",
-    ["simctl", "list", "devices", "-j"],
-    { execute: isMacOS }
-  );
+  const {
+    isLoading: isLoadingIOS,
+    data: iosData,
+    error: iosError,
+  } = useExec("xcrun", ["simctl", "list", "devices", "-j"], { execute: isMacOS });
 
   const emulators = androidData?.split("\n").filter((name) => name.trim() !== "") ?? [];
 
-  const iosSimulators: IOSSimulator[] = isMacOS && iosData
-    ? Object.values((JSON.parse(iosData) as SimctlDevices).devices).flatMap((devices) => devices.filter((d) => d.isAvailable))
-    : [];
+  const iosSimulators: IOSSimulator[] =
+    isMacOS && iosData
+      ? Object.values((JSON.parse(iosData) as SimctlDevices).devices).flatMap((devices) =>
+          devices.filter((d) => d.isAvailable),
+        )
+      : [];
 
   if (androidError) {
     showToast({
